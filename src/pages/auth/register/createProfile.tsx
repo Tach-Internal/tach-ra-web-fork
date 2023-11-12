@@ -46,7 +46,8 @@ function Page() {
 
   if (status === 'loading') {
     return <div>Loading...</div>;
-  } else if (status === 'unauthenticated') {
+  }
+  if (status === 'unauthenticated') {
     router.push(`/auth/signIn/returnUrl=${returnUrl}`);
     return <div>Redirecting...</div>;
   }
@@ -56,7 +57,7 @@ function Page() {
       <h1>Create User Profile</h1>
       <p>This information is necessary to complete the registration process.</p>
       <form>
-        <Input register={register} label="Full Name" name="name"></Input>
+        <Input register={register} label="Full Name" name="name" />
         <Button onClick={handleSubmit(onSubmit)} disabled={!isValid}>
           Save
         </Button>

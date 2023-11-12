@@ -9,6 +9,7 @@ export class SetUserProfileCommand extends Command<
   IUser
 > {
   private _userService: IUserService;
+
   constructor(
     userService: IUserService,
     payload: SetUserProfileCommandPayload,
