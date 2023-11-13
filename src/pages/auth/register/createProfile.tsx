@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { Session } from 'next-auth';
 import { Button, CenterContainer, Input } from '@/components/ui';
 import { RootLayout } from '@/components';
@@ -21,6 +21,7 @@ function Page() {
     [returnUrl] = returnUrl;
   }
   const [setUserProfile, setUserProfileStatus] = useSetUserProfileMutation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
     register,
@@ -28,7 +29,8 @@ function Page() {
     control,
     getValues,
     watch,
-    formState: { errors, isValid, isSubmitting },
+    setValue,
+    formState: { errors, isValid },
   } = useForm<MutateUserProfileViewModel>({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -38,8 +40,16 @@ function Page() {
     }),
   });
 
+  useEffect(() => {
+    if (session?.user?.name) {
+      setValue('name', session.user.name);
+    }
+  }, [session, setValue]);
+
   function onSubmit(values: MutateUserProfileViewModel) {
+    setIsSubmitting(true);
     setUserProfile(values).then((result) => {
+      setIsSubmitting(false);
       router.push((returnUrl as string) ?? '/');
     });
   }
@@ -58,7 +68,11 @@ function Page() {
       <p>This information is necessary to complete the registration process.</p>
       <form>
         <Input register={register} label="Full Name" name="name" />
-        <Button onClick={handleSubmit(onSubmit)} disabled={!isValid}>
+        <Button
+          onClick={handleSubmit(onSubmit)}
+          disabled={!isValid}
+          isLoading={isSubmitting}
+        >
           Save
         </Button>
       </form>
