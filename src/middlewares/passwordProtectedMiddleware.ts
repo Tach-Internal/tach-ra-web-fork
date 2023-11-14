@@ -8,11 +8,8 @@ import { MiddlewareFactory } from '@/lib/abstractions';
 
 export const passwordProtectedMiddlewareFactory: MiddlewareFactory = (
   next: NextMiddleware,
-) => {
-  return async function middleware(
-    request: NextRequest,
-    _next: NextFetchEvent,
-  ) {
+) =>
+  async function middleware(request: NextRequest, _next: NextFetchEvent) {
     const baseUrl = request.nextUrl.origin;
     const path = request.nextUrl.pathname;
 
@@ -54,4 +51,3 @@ export const passwordProtectedMiddlewareFactory: MiddlewareFactory = (
 
     return next(request, _next);
   };
-};

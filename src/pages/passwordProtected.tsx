@@ -37,7 +37,6 @@ function PasswordProtectedPage() {
           alert(resultAsAny.error.message);
           setUsername(null);
           setPassword(null);
-        } else {
         }
       });
     }

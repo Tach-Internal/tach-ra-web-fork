@@ -2,6 +2,7 @@
 import { NextMiddleware, NextResponse } from 'next/server';
 
 import { MiddlewareFactory } from '../abstractions';
+
 export function stackMiddlewares(
   functions: MiddlewareFactory[] = [],
   index = 0,

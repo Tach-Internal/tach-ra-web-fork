@@ -58,9 +58,8 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
       sameSite: 'lax',
     });
     return res.status(204).end();
-  } else {
-    return res.status(401).json({ message: 'Unauthorized' });
   }
+  return res.status(401).json({ message: 'Unauthorized' });
 });
 
 export default router.handler(defaultHandler);
